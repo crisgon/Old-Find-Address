@@ -1,25 +1,25 @@
 <template>
   <div id="app">
-    <formulario/>
-    <endereco :showAddress="false"/>
+  <h1>Find You Address</h1>
+    <cepForm/>
+    <addressBox/>
   </div>
 </template>
 
 <script>
-import Formulario from './Components/Formulario/formulario';
-import BoxEndereco from './Components/BoxEndereco/box-endereco';
+import Form from './Components/Form/form';
+import AddressBox from './Components/AddressBox/addressBox';
 export default {
   name: 'app',
   components: {
-    formulario: Formulario,
-    endereco: BoxEndereco
+    cepForm: Form,
+    addressBox: AddressBox
   },
 
   data () {
     return {
-
     }
-  }
+  },
 }
 </script>
 
