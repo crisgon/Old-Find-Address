@@ -1,20 +1,21 @@
 <template>
-  <div class="box" v-show="hasAddress">
+  <div class="box" v-show="showAddress">
     <h2 class="box-text">Bairro</h2>
-    <span>Barreiro</span>
+    <span>{{ bairro }}</span>
     <h2 class="box-text">Rua</h2>
-    <span>Barreiro</span>
+    <span>{{ rua }}</span>
     <h2 class="box-text">Cidade</h2>
-    <span>Barreiro</span>
+    <span>{{ cidade }}</span>
     <h2 class="box-text">Estado</h2>
+    <span>{{ estado }}</span>
   </div>
 </template>
 
 <script>
   export default {
+    props: ['rua', 'cidade', 'bairro', 'estado', 'showAddress'],
     data() {
       return {
-        hasAddress: false
       }
     }
   }

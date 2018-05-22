@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <formulario/>
-    <endereco/>
+    <endereco :showAddress="false"/>
   </div>
 </template>
 

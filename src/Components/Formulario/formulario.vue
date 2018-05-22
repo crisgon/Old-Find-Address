@@ -1,7 +1,7 @@
 <template>
   <form class="formulario">
     <label for="cep" class="formulario-label">CEP:</label>
-    <input type="text" :class="cepValido" class="formulario-input" placeholder="CEP" id="cep" @input="validacao($event.target.value)">
+    <input type="text" :class="cepValido" class="formulario-input" placeholder="CEP" id="cep" @input="getAddress($event.target.value)">
   </form>
 </template>
 
@@ -9,15 +9,24 @@
   export default{
     data() {
       return {
-        cepValido: ''
+        cepValido: '',
+        endereco: {}
       }
     },
     methods: {
       validacao(e){
         let cepFormat =new RegExp('^[\\d]{3}[.]*[\\d]{2}[-]*[\\d]{3}$');
-        cepFormat.test(e)
+        return cepFormat.test(e)
         ? this.cepValido = 'acerto'
         : this.cepValido = 'erro';
+      },
+
+      getAddress(cep) {
+        if(this.validacao(cep) == 'acerto'){
+          this.$http.get(`http://apps.widenet.com.br/busca-cep/api/cep/${cep}.json`)
+              .then(response => response.json())
+              .then(dados => this.endereco = dados, err => console.log(err));
+        }
       }
     }
   }
