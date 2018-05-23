@@ -3,7 +3,8 @@
     <label for="cep" class="form-label">CEP:</label>
     <input type="text" class="form-input" placeholder="CEP" id="cep"
            :class="cepIsValid"
-           @input="getAddress($event.target.value)">
+           v-model="cep"
+           @input="getAddress">
     <input type="submit" class="form-btn" value="Find"
            @click.stop.prevent="sendAddress()">
   </form>
@@ -15,7 +16,7 @@
     data() {
       return {
         cepIsValid: '',
-        address: {}
+        cep: '',
       }
     },
     methods: {
@@ -25,17 +26,21 @@
         ? this.cepIsValid = 'sucess'
         : this.cepIsValid = 'error';
       },
-
       getAddress(cep) {
-        if(this.validation(cep) == 'sucess'){
-          this.$http.get(`http://apps.widenet.com.br/busca-cep/api/cep/${cep}.json`)
-              .then(response => response.json())
-              .then(data => this.address = data, err => console.log(err));
+        this.cep = this.cep.split('').splice(0,8).join('')
+        if(this.validation(cep.target.value) == 'sucess'){
           this.cepIsValid = 'default';
+        } else {
+          this.cepIsValid = '';
         }
       },
       sendAddress() {
-        EventBus.$emit('sendData', this.address);
+        this.$http.get(`http://apps.widenet.com.br/busca-cep/api/cep/${this.cep}.json`)
+              .then(response => response.json())
+              .then(data => {
+                EventBus.$emit('sendData', data);
+                }, err => console.log(err));
+
       }
     }
   }
@@ -47,6 +52,7 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
+    transition: 225ms cubic-bezier(0.175, 0.885, 0.32, 1.275) all
   }
 
   .form-label {
