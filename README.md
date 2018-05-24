@@ -1,4 +1,6 @@
-# find-your-address
+# Find Your Address
+
+![Find your address gif](https://i.imgur.com/UgOtwHo.gif)
 
 > A Vue.js project
 
